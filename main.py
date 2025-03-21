@@ -2,7 +2,7 @@ from src.get_api_hh import HH
 
 
 def main():
-    item_hh = HH()
+    item_hh = HH("")
     result = item_hh.load_vacancies(keyword="")
     print(result)
 

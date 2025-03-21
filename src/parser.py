@@ -1,4 +1,4 @@
 class Parser:
-    
-    def __init__(self):
-        pass
+    work: str
+    def __init__(self, work):
+        self.work = work
