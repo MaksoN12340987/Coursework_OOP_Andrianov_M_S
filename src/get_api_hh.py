@@ -1,6 +1,6 @@
-import requests
+import requests as re
 
-from src.parser import Parser
+from src.abstract_clases import Parser
 import logging
 
 logger_hh = logging.getLogger(__name__)
@@ -14,28 +14,54 @@ logger_hh.setLevel(logging.INFO)
 
 
 class HH(Parser):
-    """
-    Класс для работы с API HeadHunter
-    Класс Parser является родительским классом, который вам необходимо реализовать
-    """
-    file_worker=None
+    """Класс для получения списка вакансий
+    из с API HeadHunter
 
+    Args:
+        url (str): адрес апи
+    Returns:
+        list: список вакансий
+    """
+    url: str
 
-    def __init__(self, file_worker):
-        self.url = 'https://api.hh.ru/vacancies'
-        self.headers = {'User-Agent': 'HH-User-Agent'}
-        self.params = {'text': '', 'page': 0, 'per_page': 100}
+    def __init__(self, url):
+        self.__url = url
+        self.headers = {"User-Agent": "HH-User-Agent"}
+        self.params = {"text": "", "page": 1, "per_page": 1}
         self.vacancies = []
-        super().__init__(file_worker)
+        super().__init__()
 
-    def load_vacancies(self, keyword):
-        self.params['text'] = keyword
-        while self.params.get('page') != 2:
-            response = requests.get(self.url, headers=self.headers, params=self.params)
-            logger_hh.info(f"Output data:\n{self.vacancies}\n")
+    def load_vacancies(self, keyword: str = ""):
+        """_summary_
+
+        Args:
+            keyword (str): ключевое слово для подбора
+            вакансий
+
+        Raises:
+            ValueError: ошибка, вызываемая при не корректном
+            адресе апи
+
+        Returns:
+            list: список вакансий, найденых по ключевому слову
+        """
+        self.params["text"] = keyword
+
+        while self.params.get("page") != 3:
+            try:
+                response = re.get(self.__url, headers=self.headers, params=self.params)
             
-            vacancies = response.json()['items']
-            self.vacancies.extend(vacancies)
+            except re.exceptions.ConnectionError:
+                print("Connection Error. Please check your network connection.")
+                response = []
+            
+            except re.exceptions.HTTPError:
+                raise ValueError("HTTP Error. Please check the URL.")
+            
+            finally:
+                logger_hh.info(f"Status code:\n{response}")
 
-            self.params['page'] += 1
-        
+            vacancies = response.json()["items"]
+            self.vacancies.extend(vacancies)
+            self.params["page"] += 1
+        return self.vacancies

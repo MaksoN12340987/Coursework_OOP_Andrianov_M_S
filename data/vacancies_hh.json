@@ -1,0 +1,213 @@
+[
+    {
+        "id": "118520774",
+        "premium": false,
+        "name": "Golang Developer",
+        "department": null,
+        "has_test": false,
+        "response_letter_required": false,
+        "area": {
+            "id": "1006",
+            "name": "Гродно",
+            "url": "https://api.hh.ru/areas/1006"
+        },
+        "salary": null,
+        "type": {
+            "id": "open",
+            "name": "Открытая"
+        },
+        "address": null,
+        "response_url": null,
+        "sort_point_distance": null,
+        "published_at": "2025-03-18T17:27:48+0300",
+        "created_at": "2025-03-18T17:27:48+0300",
+        "archived": false,
+        "apply_alternate_url": "https://hh.ru/applicant/vacancy_response?vacancyId=118520774",
+        "show_logo_in_search": null,
+        "insider_interview": null,
+        "url": "https://api.hh.ru/vacancies/118520774?host=hh.ru",
+        "alternate_url": "https://hh.ru/vacancy/118520774",
+        "relations": [],
+        "employer": {
+            "id": "972978",
+            "name": "Фингерз Медиа",
+            "url": "https://api.hh.ru/employers/972978",
+            "alternate_url": "https://hh.ru/employer/972978",
+            "logo_urls": {
+                "original": "https://img.hhcdn.ru/employer-logo-original/102338.jpg",
+                "90": "https://img.hhcdn.ru/employer-logo/1089725.jpeg",
+                "240": "https://img.hhcdn.ru/employer-logo/1089726.jpeg"
+            },
+            "vacancies_url": "https://api.hh.ru/vacancies?employer_id=972978",
+            "accredited_it_employer": false,
+            "trusted": true
+        },
+        "snippet": {
+            "requirement": "2+ года коммерческого опыта с Golang. Английский В1. Хорошее понимание микросервисной архитектуры. Владение стеком: Go, gRPC, GraphQL, HTTP...",
+            "responsibility": "Проектированием архитектуры приложений. Разработкой микросервисов и монолитов. Код ревью. Планированием задач."
+        },
+        "show_contacts": true,
+        "contacts": null,
+        "schedule": {
+            "id": "remote",
+            "name": "Удаленная работа"
+        },
+        "working_days": [],
+        "working_time_intervals": [],
+        "working_time_modes": [],
+        "accept_temporary": true,
+        "fly_in_fly_out_duration": [],
+        "work_format": [
+            {
+                "id": "REMOTE",
+                "name": "Удалённо"
+            }
+        ],
+        "working_hours": [
+            {
+                "id": "HOURS_8",
+                "name": "8 часов"
+            }
+        ],
+        "work_schedule_by_days": [
+            {
+                "id": "FIVE_ON_TWO_OFF",
+                "name": "5/2"
+            },
+            {
+                "id": "FLEXIBLE",
+                "name": "Свободный"
+            }
+        ],
+        "night_shifts": false,
+        "professional_roles": [
+            {
+                "id": "96",
+                "name": "Программист, разработчик"
+            }
+        ],
+        "accept_incomplete_resumes": false,
+        "experience": {
+            "id": "between1And3",
+            "name": "От 1 года до 3 лет"
+        },
+        "employment": {
+            "id": "full",
+            "name": "Полная занятость"
+        },
+        "employment_form": {
+            "id": "FULL",
+            "name": "Полная"
+        },
+        "internship": false,
+        "adv_response_url": null,
+        "is_adv_vacancy": false,
+        "adv_context": null
+    },
+    {
+        "id": "110412718",
+        "premium": false,
+        "name": "Junior Python Developer",
+        "department": null,
+        "has_test": false,
+        "response_letter_required": false,
+        "area": {
+            "id": "1550",
+            "name": "Таганрог",
+            "url": "https://api.hh.ru/areas/1550"
+        },
+        "salary": {
+            "from": 75000,
+            "to": null,
+            "currency": "RUR",
+            "gross": false
+        },
+        "type": {
+            "id": "open",
+            "name": "Открытая"
+        },
+        "address": null,
+        "response_url": null,
+        "sort_point_distance": null,
+        "published_at": "2025-03-06T19:57:18+0300",
+        "created_at": "2025-03-06T19:57:18+0300",
+        "archived": false,
+        "apply_alternate_url": "https://hh.ru/applicant/vacancy_response?vacancyId=110412718",
+        "show_logo_in_search": null,
+        "insider_interview": null,
+        "url": "https://api.hh.ru/vacancies/110412718?host=hh.ru",
+        "alternate_url": "https://hh.ru/vacancy/110412718",
+        "relations": [],
+        "employer": {
+            "id": "10911658",
+            "name": "JavaCode",
+            "url": "https://api.hh.ru/employers/10911658",
+            "alternate_url": "https://hh.ru/employer/10911658",
+            "logo_urls": {
+                "original": "https://img.hhcdn.ru/employer-logo-original/1253713.png",
+                "90": "https://img.hhcdn.ru/employer-logo/6635281.png",
+                "240": "https://img.hhcdn.ru/employer-logo/6635282.png"
+            },
+            "vacancies_url": "https://api.hh.ru/vacancies?employer_id=10911658",
+            "accredited_it_employer": false,
+            "trusted": true
+        },
+        "snippet": {
+            "requirement": "Базовые знания <highlighttext>Python</highlighttext>. Опыт написания REST приложений на любом <highlighttext>Python</highlighttext> фреймворке (Flask, FastAPI, Django и др.). Понимание основ SQL и...",
+            "responsibility": null
+        },
+        "show_contacts": false,
+        "contacts": null,
+        "schedule": {
+            "id": "fullDay",
+            "name": "Полный день"
+        },
+        "working_days": [],
+        "working_time_intervals": [],
+        "working_time_modes": [],
+        "accept_temporary": true,
+        "fly_in_fly_out_duration": [],
+        "work_format": [
+            {
+                "id": "ON_SITE",
+                "name": "На месте работодателя"
+            }
+        ],
+        "working_hours": [
+            {
+                "id": "HOURS_8",
+                "name": "8 часов"
+            }
+        ],
+        "work_schedule_by_days": [
+            {
+                "id": "FIVE_ON_TWO_OFF",
+                "name": "5/2"
+            }
+        ],
+        "night_shifts": false,
+        "professional_roles": [
+            {
+                "id": "96",
+                "name": "Программист, разработчик"
+            }
+        ],
+        "accept_incomplete_resumes": false,
+        "experience": {
+            "id": "noExperience",
+            "name": "Нет опыта"
+        },
+        "employment": {
+            "id": "full",
+            "name": "Полная занятость"
+        },
+        "employment_form": {
+            "id": "FULL",
+            "name": "Полная"
+        },
+        "internship": false,
+        "adv_response_url": null,
+        "is_adv_vacancy": false,
+        "adv_context": null
+    }
+]

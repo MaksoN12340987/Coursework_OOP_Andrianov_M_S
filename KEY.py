@@ -1,14 +1,11 @@
 import requests
 
 url = "https://hh.ru/oauth/authorize"
-params = {
-    "response_type" : "code",
-    "client_id" : "SUR3TEM6GAPICF6I8CSDKIAEDLOF906MHTUV96K7PITHL1BAT8J19CB739T1UM3R"
-    }
+params = {"response_type": "code", "client_id": "SUR3TEM6GAPICF6I8CSDKIAEDLOF906MHTUV96K7PITHL1BAT8J19CB739T1UM3R"}
 # https://hh.ru/oauth/authorize?response_type=code&client_id=SUR3TEM6GAPICF6I8CSDKIAEDLOF906MHTUV96K7PITHL1BAT8J19CB739T1UM3R
 
 # url = "https://api.hh.ru/token"
-headers = {"User-Agent" : "Console application of suitable vacancies/1.0 (andrianov_maksim@outlook.com)"}
+headers = {"User-Agent": "Console application of suitable vacancies/1.0 (andrianov_maksim@outlook.com)"}
 # params = {
 #     "client_id" : "SUR3TEM6GAPICF6I8CSDKIAEDLOF906MHTUV96K7PITHL1BAT8J19CB739T1UM3R",
 #     "client_secret" : "J5TM5P8P0QNEH39CUB53FT2KR96MU4BCK7Q379D8Q4FC5IPM7PV8BKK89LJBUOIC",
