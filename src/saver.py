@@ -1,7 +1,7 @@
 import json
+import logging
 
 import pandas as pd
-import logging
 
 logger_saver = logging.getLogger(__name__)
 file_handler = logging.FileHandler(f"log/{__name__}.log", mode="w")
@@ -23,6 +23,7 @@ class Saver:
         str: сообщение об успешном
         или неуспешном выполнении задачи
     """
+
     file_worker: str
 
     def __init__(self, file_worker):
@@ -37,7 +38,7 @@ class Saver:
         Args:
             vacancies (list): список вакансий
             path_to_file (str): путь к файлу.
-
+ 
         Returns:
             str: сообщение об успешном
             или неуспешном выполнении задачи
@@ -51,7 +52,7 @@ class Saver:
                 )
                 logger_saver.info(f"Write vacancies to file: {self.file_worker}")
                 return "Write vacancies OK"
-        
+
         except FileNotFoundError as error:
             logger_saver.info(error)
             return "Error, file not found"
@@ -66,7 +67,7 @@ class Saver:
             path_to_file (str): путь к файлу.
 
         Returns:
-            Список из файла или строка о неуспешном 
+            Список из файла или строка о неуспешном
             выполнении задачи
         """
         if path_to_file == "":
@@ -75,7 +76,7 @@ class Saver:
             with open(path_to_file, "r", encoding="utf-8") as file:
                 logger_saver.info(f"Ride vacancies OK, file: {path_to_file}")
                 return json.load(file)
-        
+
         except FileNotFoundError as error:
             logger_saver.info(error)
             return "Error, file not found"

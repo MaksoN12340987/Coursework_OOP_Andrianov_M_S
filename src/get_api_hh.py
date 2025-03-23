@@ -1,7 +1,8 @@
-import requests as re
+import logging
+
+import requests
 
 from src.abstract_clases import Parser
-import logging
 
 logger_hh = logging.getLogger(__name__)
 file_handler = logging.FileHandler(f"log/{__name__}.log", mode="w")
@@ -22,16 +23,22 @@ class HH(Parser):
     Returns:
         list: список вакансий
     """
-    url: str
 
-    def __init__(self, url):
+    url: str
+    keyword: str
+
+    def __init__(self, url, keyword):
         self.__url = url
-        self.headers = {"User-Agent": "HH-User-Agent"}
-        self.params = {"text": "", "page": 1, "per_page": 1}
-        self.vacancies = []
+        self.__vacancies = []
+        self.__headers = {"User-Agent": "HH-User-Agent"}
+        self.__params = {"text": keyword, "page": 1, "per_page": 1}
         super().__init__()
 
-    def load_vacancies(self, keyword: str = ""):
+    def __str__(self):
+        return f"{self.__url}, {self.__headers}, {self.__params}"
+
+    @property
+    def load_vacancies(self):
         """_summary_
 
         Args:
@@ -45,23 +52,24 @@ class HH(Parser):
         Returns:
             list: список вакансий, найденых по ключевому слову
         """
-        self.params["text"] = keyword
-
-        while self.params.get("page") != 3:
+        while self.__params.get("page") != 20:
+            vacancies = []
             try:
-                response = re.get(self.__url, headers=self.headers, params=self.params)
-            
-            except re.exceptions.ConnectionError:
-                print("Connection Error. Please check your network connection.")
-                response = []
-            
-            except re.exceptions.HTTPError:
-                raise ValueError("HTTP Error. Please check the URL.")
-            
-            finally:
-                logger_hh.info(f"Status code:\n{response}")
+                response = requests.get(self.__url, headers=self.__headers, params=self.__params)
+                if response.status_code == 200:
+                    vacancies = response.json()["items"]
 
-            vacancies = response.json()["items"]
-            self.vacancies.extend(vacancies)
-            self.params["page"] += 1
-        return self.vacancies
+            except requests.exceptions.ConnectionError:
+                vacancies = []
+                raise ConnectionError("Connection Error. Please check your network connection.")
+
+            except requests.exceptions.HTTPError:
+                vacancies = []
+                raise ValueError("HTTP Error. Please check the URL.")
+
+            finally:
+                logger_hh.info(f"Attempt to access API completed, returned:\n{vacancies[:50]}")
+
+            self.__vacancies.extend(vacancies)
+            self.__params["page"] += 1
+        return self.__vacancies
