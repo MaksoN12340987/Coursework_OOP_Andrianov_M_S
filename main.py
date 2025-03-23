@@ -20,10 +20,10 @@ def main():
     # vacancies_hh = item_hh.load_vacancies
     # print(type(vacancies_hh))
 
-    # save_object = Saver("data/vacancies_hh.json")
+    save_object = Saver("data/vacancies_hh.json")
 
     # save_object.save_vacancy(vacancies_hh)
-    # print(type(save_object.load_vacancy()))
+    print(save_object.load_vacancy())
 
     logger_main.info("End main")
 

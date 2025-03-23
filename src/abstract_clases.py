@@ -6,8 +6,11 @@ class Parser(ABC):
     def __init__(self):
         pass
 
+    def __str__(self):
+        pass
+
     @abstractmethod
-    def load_vacancies(self, keyword: str = ""):
+    def load_vacancies(self):
         pass
 
 

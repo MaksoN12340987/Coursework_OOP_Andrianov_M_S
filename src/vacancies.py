@@ -2,5 +2,6 @@ from src.abstract_clases import Vacanci
 
 
 class VacanciOperator(Vacanci):
+
     def __init__(self):
-        pass
+        super().__init__()

@@ -1,5 +1,4 @@
 import logging
-
 import requests
 
 from src.abstract_clases import Parser
@@ -35,6 +34,7 @@ class HH(Parser):
         super().__init__()
 
     def __str__(self):
+        super().__str__()
         return f"{self.__url}, {self.__headers}, {self.__params}"
 
     @property
@@ -52,6 +52,7 @@ class HH(Parser):
         Returns:
             list: список вакансий, найденых по ключевому слову
         """
+        super().load_vacancies()
         while self.__params.get("page") != 20:
             vacancies = []
             try:

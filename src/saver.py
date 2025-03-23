@@ -38,7 +38,7 @@ class Saver:
         Args:
             vacancies (list): список вакансий
             path_to_file (str): путь к файлу.
- 
+
         Returns:
             str: сообщение об успешном
             или неуспешном выполнении задачи
@@ -53,11 +53,11 @@ class Saver:
                 logger_saver.info(f"Write vacancies to file: {self.file_worker}")
                 return "Write vacancies OK"
 
-        except FileNotFoundError as error:
-            logger_saver.info(error)
-            return "Error, file not found"
+        except PermissionError as error:
+            logger_saver.info(f"{error}!!!")
+            raise PermissionError(f"Error! Access denied or file with such name cannot be created")
 
-    def load_vacancy(self, path_to_file: str = "") -> str:
+    def load_vacancy(self, path_to_file: str = "") -> list:
         """Метод чтения списка вакансий из файла .json, путь
         к которому можно указать.
         Если путь не будет указан, то будет использован
@@ -79,4 +79,9 @@ class Saver:
 
         except FileNotFoundError as error:
             logger_saver.info(error)
-            return "Error, file not found"
+            print("Error, file not found")
+            return []
+        
+        except PermissionError as error:
+            logger_saver.info(f"{error}!!!")
+            raise PermissionError(f"File access error")
