@@ -6,9 +6,9 @@ class VacanciOperator(Vacanci):
 
     def __init__(self, pull_vacanci):
         self.__job_title = ""
-        self.__job_title = ""
-        self.__pull_vacanci = pull_vacanci
-        self.__job_link = pull_vacanci
+        self.__link_to_vacancy = ""
+        self.__salary = 0
+        self.__job_requirements = ""
         self.__pull_vacanci = pull_vacanci
         super().__init__()
 
@@ -22,3 +22,6 @@ class VacanciOperator(Vacanci):
             result += "Упс, вакансий не нашлось("
         
         return result
+
+    def sorting_vacancies(self, sort_selector):
+        keys = ["name", "", "", "salary", "requirement"]

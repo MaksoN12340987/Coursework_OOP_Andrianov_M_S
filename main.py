@@ -27,7 +27,7 @@ def main():
     vacancies = save_object.load_vacancy()
 
     pull_vacanci = VacanciOperator(vacancies)
-    print(pull_vacanci)
+    pull_vacanci.sorting_vacancies("")
 
     logger_main.info("End main")
 
