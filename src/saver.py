@@ -1,7 +1,6 @@
 import json
 import logging
 
-import pandas as pd
 
 logger_saver = logging.getLogger(__name__)
 file_handler = logging.FileHandler(f"log/{__name__}.log", mode="w")

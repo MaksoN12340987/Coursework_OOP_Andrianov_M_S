@@ -1,5 +1,6 @@
 import logging
 
+from src.vacancies import VacanciOperator
 from src.get_api_hh import HH
 from src.saver import Saver
 
@@ -23,7 +24,10 @@ def main():
     save_object = Saver("data/vacancies_hh.json")
 
     # save_object.save_vacancy(vacancies_hh)
-    print(save_object.load_vacancy())
+    vacancies = save_object.load_vacancy()
+
+    pull_vacanci = VacanciOperator(vacancies)
+    print(pull_vacanci)
 
     logger_main.info("End main")
 
