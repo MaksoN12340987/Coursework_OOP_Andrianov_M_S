@@ -1,7 +1,6 @@
 import json
 import logging
 
-
 logger_saver = logging.getLogger(__name__)
 file_handler = logging.FileHandler(f"log/{__name__}.log", mode="w")
 file_formatter = logging.Formatter(
@@ -12,7 +11,7 @@ logger_saver.addHandler(file_handler)
 logger_saver.setLevel(logging.INFO)
 
 
-class Saver:
+class VacanciSaver:
     """Класс сохранения списка вакансий в файл .json
     или выгрузки из файла .json и преобразования в список
 
@@ -54,7 +53,7 @@ class Saver:
 
         except PermissionError as error:
             logger_saver.info(f"{error}!!!")
-            raise PermissionError(f"Error! Access denied or file with such name cannot be created")
+            raise PermissionError("Error! Access denied or file with such name cannot be created")
 
     def load_vacancy(self, path_to_file: str = "") -> list:
         """Метод чтения списка вакансий из файла .json, путь
@@ -80,7 +79,7 @@ class Saver:
             logger_saver.info(error)
             print("Error, file not found")
             return []
-        
+
         except PermissionError as error:
             logger_saver.info(f"{error}!!!")
-            raise PermissionError(f"File access error")
+            raise PermissionError("File access error")

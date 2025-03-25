@@ -1,8 +1,7 @@
-import json
-
 import pytest
 
-from src.saver import Saver
+from src.vacancies import VacanciOperator
+from src.saver import VacanciSaver
 from src.get_api_hh import HH
 
 
@@ -13,9 +12,21 @@ def object_hh():
 
 
 @pytest.fixture
-def object_saver():
-    save_object = Saver("test/data_test_vacancies.json")
+def object_vacanci_saver():
+    save_object = VacanciSaver("test/data_test_vacancies.json")
     return save_object
+
+
+@pytest.fixture
+def object_vacanci_operator(object_vacanci_saver):
+    object_vacanci = VacanciOperator(object_vacanci_saver.load_vacancy("test/data_test_vacancies.json"))
+    return object_vacanci
+
+
+@pytest.fixture
+def object_vacanci_operator_list_clear():
+    object_vacanci = VacanciOperator([])
+    return object_vacanci
 
 
 @pytest.fixture
@@ -101,7 +112,7 @@ def vacancies():
             "has_test": False,
             "response_letter_required": False,
             "area": {"id": "1", "name": "Москва", "url": "https://api.hh.ru/areas/1"},
-            "salary": None,
+            "salary": {"from": 100000, "to": None, "currency": "RUR", "gross": False},
             "type": {"id": "open", "name": "Открытая"},
             "address": {
                 "city": "Москва",
@@ -165,6 +176,49 @@ def vacancies():
 
 
 @pytest.fixture
+def object_object_vacanci_operator_salary(vacancies):
+    save_object = VacanciOperator(
+        [
+            {
+                "id": "118520774",
+                "premium": False,
+                "name": "Golang Developer",
+                "department": None,
+                "has_test": False,
+                "response_letter_required": False,
+                "area": {"id": "1006", "name": "Гродно", "url": "https://api.hh.ru/areas/1006"},
+                "salary": None,
+                "alternate_url": "https://hh.ru/vacancy/118728255",
+                "snippet": {
+                    "requirement": "Опыт работы числовым аналитиком от 2 лет. Уверенное знание <highlighttext>Python</highlighttext>" +
+                    ", SQL. Понимание основ теории вероятностей и мат.статистики. Уже работал с...",
+                    "responsibility": "Планировать KPI. Разрабатывать модели прогнозирований. Проводить исследования, сопровождать А/В тесты. " +
+                    "Разрабатывать отчетность, дашборды. Анализировать и предлагать решения по повышению...",
+                },
+            },
+            {
+                "id": "118676373",
+                "premium": False,
+                "name": "Тестировщик",
+                "department": None,
+                "has_test": False,
+                "response_letter_required": False,
+                "area": {"id": "1", "name": "Москва", "url": "https://api.hh.ru/areas/1"},
+                "salary": {"from": 100000, "to": None, "currency": "RUR", "gross": False},
+                "alternate_url": "https://hh.ru/vacancy/118728255",
+                "snippet": {
+                    "requirement": "Опыт работы числовым аналитиком от 2 лет. Уверенное знание <highlighttext>Python</highlighttext>, " +
+                    "SQL. Понимание основ теории вероятностей и мат.статистики. Уже работал с...",
+                    "responsibility": "Планировать KPI. Разрабатывать модели прогнозирований. Проводить исследования, сопровождать А/В тесты. " +
+                    "Разрабатывать отчетность, дашборды. Анализировать и предлагать решения по повышению...",
+                },
+            },
+        ]
+    )
+    return save_object
+
+
+@pytest.fixture
 def returnet_of_file():
     return str(
         [
@@ -205,8 +259,10 @@ def returnet_of_file():
                     "trusted": True,
                 },
                 "snippet": {
-                    "requirement": "2+ года коммерческого опыта с Golang. Английский В1. Хорошее понимание микросервисной архитектуры. Владение стеком: Go, gRPC, GraphQL, HTTP...",
-                    "responsibility": "Проектированием архитектуры приложений. Разработкой микросервисов и монолитов. Код ревью. Планированием задач.",
+                    "requirement": "2+ года коммерческого опыта с Golang. Английский В1. Хорошее понимание микросервисной архитектуры. " +
+                    "Владение стеком: Go, gRPC, GraphQL, HTTP...",
+                    "responsibility": "Проектированием архитектуры приложений. Разработкой микросервисов и монолитов. Код ревью. " +
+                    "Планированием задач.",
                 },
                 "show_contacts": True,
                 "contacts": None,
@@ -241,7 +297,7 @@ def returnet_of_file():
                 "has_test": False,
                 "response_letter_required": False,
                 "area": {"id": "1", "name": "Москва", "url": "https://api.hh.ru/areas/1"},
-                "salary": None,
+                "salary": {"from": 100000, "to": None, "currency": "RUR", "gross": False},
                 "type": {"id": "open", "name": "Открытая"},
                 "address": {
                     "city": "Москва",
@@ -276,8 +332,10 @@ def returnet_of_file():
                     "trusted": True,
                 },
                 "snippet": {
-                    "requirement": "Понимание основных принципов REST API, базовое знание HTTP. Начальное знание <highlighttext>Python</highlighttext> (понимание таких тем, как: условные операторы, циклы, методы строк...",
-                    "responsibility": "Тестировать API, backend, frontend, требования UX|UI ПО. Анализировать данные веб-трафика (логи). Подготавливать тестовые данные. Настраивать тестовое окружение. ",
+                    "requirement": "Понимание основных принципов REST API, базовое знание HTTP. Начальное знание <highlighttext>Python" +
+                    "</highlighttext> (понимание таких тем, как: условные операторы, циклы, методы строк...",
+                    "responsibility": "Тестировать API, backend, frontend, требования UX|UI ПО. Анализировать данные веб-трафика (логи). " +
+                    "Подготавливать тестовые данные. Настраивать тестовое окружение. ",
                 },
                 "show_contacts": False,
                 "contacts": None,
@@ -306,3 +364,50 @@ def returnet_of_file():
             },
         ]
     )
+
+
+@pytest.fixture
+def sorted_vacancies():
+    return [
+        {
+            "id": "118676373",
+            "premium": False,
+            "name": "Тестировщик",
+            "department": None,
+            "has_test": False,
+            "response_letter_required": False,
+            "area": {"id": "1", "name": "Москва", "url": "https://api.hh.ru/areas/1"},
+            "salary": {"from": 100000, "to": None, "currency": "RUR", "gross": False},
+            "alternate_url": "https://hh.ru/vacancy/118728255",
+            "snippet": {
+                "requirement": "Опыт работы числовым аналитиком от 2 лет. Уверенное знание <highlighttext>Python" +
+                "</highlighttext>, SQL. Понимание основ теории вероятностей и мат.статистики. Уже работал с...",
+                "responsibility": "Планировать KPI. Разрабатывать модели прогнозирований. Проводить исследования, сопровождать А/В тесты. " +
+                "Разрабатывать отчетность, дашборды. Анализировать и предлагать решения по повышению...",
+            },
+        },
+        {
+            "id": "118520774",
+            "premium": False,
+            "name": "Golang Developer",
+            "department": None,
+            "has_test": False,
+            "response_letter_required": False,
+            "area": {"id": "1006", "name": "Гродно", "url": "https://api.hh.ru/areas/1006"},
+            "salary": {
+                "from": 0,
+            },
+            "alternate_url": "https://hh.ru/vacancy/118728255",
+            "snippet": {
+                "requirement": "Опыт работы числовым аналитиком от 2 лет. Уверенное знание <highlighttext>Python</highlighttext>, SQL. " +
+                "Понимание основ теории вероятностей и мат.статистики. Уже работал с...",
+                "responsibility": "Планировать KPI. Разрабатывать модели прогнозирований. Проводить исследования, сопровождать А/В тесты. " +
+                "Разрабатывать отчетность, дашборды. Анализировать и предлагать решения по повышению...",
+            },
+        },
+    ]
+
+
+@pytest.fixture
+def return_vacancy_job_requirements() -> str:
+    return "2+ года коммерческого опыта с Golang. Английский В1. Хорошее понимание микросервисной архитектуры. Владение стеком: Go, gRPC, GraphQL, HTTP...\n"

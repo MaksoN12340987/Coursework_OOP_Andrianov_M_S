@@ -116,7 +116,12 @@
             "name": "Москва",
             "url": "https://api.hh.ru/areas/1"
         },
-        "salary": null,
+        "salary": {
+            "from": 100000,
+            "to": null,
+            "currency": "RUR",
+            "gross": false
+        },
         "type": {
             "id": "open",
             "name": "Открытая"

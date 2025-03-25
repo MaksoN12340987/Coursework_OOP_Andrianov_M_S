@@ -1,8 +1,9 @@
 import logging
 
+from src.filtering_vacancies import FilteringVacancies
 from src.vacancies import VacanciOperator
 from src.get_api_hh import HH
-from src.saver import Saver
+from src.saver import VacanciSaver
 
 logger_main = logging.getLogger(__name__)
 file_handler = logging.FileHandler(f"log/{__name__}.log", mode="w", encoding="UTF8")
@@ -19,15 +20,21 @@ def main():
 
     # item_hh = HH("https://api.hh.ru/vacancies", "Python")
     # vacancies_hh = item_hh.load_vacancies
-    # print(type(vacancies_hh))
+    item_hh = VacanciSaver("data/vacancies_hh.json")
+    vacancies_hh = item_hh.load_vacancy()
 
-    save_object = Saver("data/vacancies_hh.json")
 
-    # save_object.save_vacancy(vacancies_hh)
-    vacancies = save_object.load_vacancy()
+    selected_vacanci = FilteringVacancies(vacancies_hh)
+    print(selected_vacanci)
+    selected_sort_vacanci = selected_vacanci.sorting_vacancies_for_salary("зарплата")
+    print(selected_vacanci)
 
-    pull_vacanci = VacanciOperator(vacancies)
-    pull_vacanci.sorting_vacancies("")
+
+    save_object = VacanciSaver("data/selected_vacancies_hh.json")
+    save_object.save_vacancy(selected_sort_vacanci)
+
+    # vacancies = save_object.load_vacancy()
+    # print(vacancies[0]["name"])
 
     logger_main.info("End main")
 

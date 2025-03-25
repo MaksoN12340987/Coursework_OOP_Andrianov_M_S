@@ -21,3 +21,21 @@ class Vacanci(ABC):
 
     def __str__(self):
         pass
+
+    def vacancy_job_title(self):
+        pass
+
+    def vacancy_link_to_vacancy(self):
+        pass
+
+    def vacancy_salary(self):
+        pass
+
+    def vacancy_job_requirements(self):
+        pass
+
+    def sorting_vacancies_for_salary(self):
+        pass
+
+    def filtering_vacancies(self):
+        pass
