@@ -51,7 +51,7 @@ class FilteringVacancies(VacanciOperator):
         parameter = parameter.lower()
         filters = filters.lower().title()
         result = []
-    
+
         if parameter == "зарплата" or parameter == "1":
             logger_filtering.warning(f"Фильтрую по зарплате")
 

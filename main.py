@@ -17,21 +17,62 @@ logger_main.setLevel(logging.INFO)
 
 def main():
     logger_main.info("Get started main")
+    triger = True
+
+    # Входные данные
+    api_src = "https://api.hh.ru/vacancies"
+    # Куда сохранить список вакансий, полученных из апи
+    save_to_file = "data/vacancies_hh.json"
+    # Куда сохранить список отсортированных и отфильтрованных вакансий
+    save_to_file_sort = "data/selected_vacancies_hh.json"
+
+    while triger:
+
+        user_choice = (
+            input(
+                "Привет! Добро пожаловать в программу подбора вакансий\n"
+                + """Выберите необходимый пункт меню:
+    1. Запросить список вакансий по ключевому слову
+    2. Выйти
+
+    Введите номер варианта: """
+            )
+            .lower()
+            .replace(".", "")
+        )
+
+        if user_choice == "1":
+            find_word = input("Введите слово, по которому я подберу вакансии: ").lower().replace(".", "")
+            item_hh = HH(api_src, find_word)
+            vacancies_hh = item_hh.load_vacancies
+            
+            if vacancies_hh != []:
+                print(f"Успешно получили список вакансий, сохраню их:\n{save_to_file}")
+                vacancies = VacanciSaver("data/vacancies_hh.json")
+                to_sort = input("""Если желаете отсортировать по убываню или по возврастанию, то
+                введите соответствующее слово или нажмите продолжть:\n""").lower().replace(".", "")
+                
+            
+                sorted_vacanci = VacanciOperator(vacancies.load_vacancy())
+                
+        elif user_choice == "2":
+            print("До следующей встречи)")
+            triger = False
+        else:
+            print("Хм, кажется такого варианта у меня пока нет(")
 
     # item_hh = HH("https://api.hh.ru/vacancies", "Python")
     # vacancies_hh = item_hh.load_vacancies
-    item_hh = VacanciSaver("data/vacancies_hh.json")
-    vacancies_hh = item_hh.load_vacancy()
+    # item_hh = VacanciSaver("data/vacancies_hh.json")
+    # vacancies_hh = item_hh.load_vacancy()
 
+    # selected_vacanci = FilteringVacancies(vacancies_hh)
+    # print(selected_vacanci)
+    # selected_sort_vacanci = selected_vacanci.sorting_vacancies_for_salary("зарплата")
+    # print(selected_vacanci)
 
-    selected_vacanci = FilteringVacancies(vacancies_hh)
-    print(selected_vacanci)
-    selected_sort_vacanci = selected_vacanci.sorting_vacancies_for_salary("зарплата")
-    print(selected_vacanci)
-
-
-    save_object = VacanciSaver("data/selected_vacancies_hh.json")
-    save_object.save_vacancy(selected_sort_vacanci)
+    # save_object = VacanciSaver("data/selected_vacancies_hh.json")
+    # save_object.save_vacancy(selected_sort_vacanci)
 
     # vacancies = save_object.load_vacancy()
     # print(vacancies[0]["name"])

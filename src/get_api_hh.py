@@ -39,7 +39,7 @@ class HH(Parser):
 
     @property
     def load_vacancies(self):
-        """_summary_
+        """Ьетод получает список вакансий из апи hh.ru
 
         Args:
             keyword (str): ключевое слово для подбора
