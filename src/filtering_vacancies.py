@@ -34,7 +34,7 @@ class FilteringVacancies(VacanciOperator):
 
         return result
 
-    def sorting_vacancies_for_salary(self, parameter: str = "", filters: str = "", selector: bool = True) -> list:
+    def sorting_vacancies_for_salary(self, triger: bool = True, parameter: str = "", filters: str = "", selector: bool = True) -> list:
         """Метод фильтрует вакансии по:
         1 "зарплата" указана\нет
         2 "тип занятости" полная или другая
@@ -47,7 +47,8 @@ class FilteringVacancies(VacanciOperator):
         Returns:
             list: _description_
         """
-        super().sorting_vacancies_for_salary(selector)
+        if triger:
+            super().sorting_vacancies_for_salary(selector)
         parameter = parameter.lower()
         filters = filters.lower().title()
         result = []

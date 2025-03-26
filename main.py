@@ -1,4 +1,5 @@
 import logging
+import re
 
 from src.filtering_vacancies import FilteringVacancies
 from src.vacancies import VacanciOperator
@@ -26,35 +27,60 @@ def main():
     # Куда сохранить список отсортированных и отфильтрованных вакансий
     save_to_file_sort = "data/selected_vacancies_hh.json"
 
+    pattern = re.compile(r"\W")
+
     while triger:
 
-        user_choice = (
-            input(
-                "Привет! Добро пожаловать в программу подбора вакансий\n"
-                + """Выберите необходимый пункт меню:
+        user_choice = re.sub(
+            pattern,
+            "",
+            (
+                input(
+                    "Привет! Добро пожаловать в программу подбора вакансий\n"
+                    + """Выберите необходимый пункт меню:
     1. Запросить список вакансий по ключевому слову
     2. Выйти
 
     Введите номер варианта: """
-            )
-            .lower()
-            .replace(".", "")
-        )
+                )
+            ),
+        ).lower()
 
         if user_choice == "1":
-            find_word = input("Введите слово, по которому я подберу вакансии: ").lower().replace(".", "")
+            find_word = re.sub(pattern, "", input("Введите слово, по которому я подберу вакансии: ")).lower()
             item_hh = HH(api_src, find_word)
             vacancies_hh = item_hh.load_vacancies
-            
+
             if vacancies_hh != []:
-                print(f"Успешно получили список вакансий, сохраню их:\n{save_to_file}")
+                print(f"\nУспешно получили список вакансий, сохраню их:\n{save_to_file}\n")
                 vacancies = VacanciSaver("data/vacancies_hh.json")
-                to_sort = input("""Если желаете отсортировать по убываню или по возврастанию, то
-                введите соответствующее слово или нажмите продолжть:\n""").lower().replace(".", "")
                 
-            
-                sorted_vacanci = VacanciOperator(vacancies.load_vacancy())
+                to_sort = re.sub(pattern, "", (
+                    input(
+                        """Если желаете отсортировать по убываню или по возврастанию, то
+                введите соответствующее слово или нажмите продолжть:\n"""
+                    ))
+                ).lower()
                 
+                to_filtring = re.sub(pattern, "", (
+                    input(
+                        """Если желаете отфильтровать по убываню или по возврастанию, то
+                введите соответствующее слово или нажмите продолжть:\n"""
+                    ))
+                ).lower()
+                
+                sorted_vacanci = []
+
+                if to_sort == "убываню":
+                    to_sorted_vacanci = VacanciOperator(vacancies.load_vacancy())
+                    sorted_vacanci = to_sorted_vacanci.sorting_vacancies_for_salary(True)
+                elif to_sort == "убываню":
+                    to_sorted_vacanci = VacanciOperator(vacancies.load_vacancy())
+                    sorted_vacanci = to_sorted_vacanci.sorting_vacancies_for_salary(True)
+                else:
+                    to_sorted_vacanci = FilteringVacancies(vacancies.load_vacancy())
+                    sorted_vacanci = to_sorted_vacanci.sorting_vacancies_for_salary(False)
+
         elif user_choice == "2":
             print("До следующей встречи)")
             triger = False
