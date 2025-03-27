@@ -27,7 +27,7 @@ def main():
     # Куда сохранить список отсортированных и отфильтрованных вакансий
     save_to_file_sort = "data/selected_vacancies_hh.json"
 
-    pattern = re.compile(r"\W")
+    pattern = re.compile(r"[.,?]")
 
     while triger:
 
@@ -50,58 +50,86 @@ def main():
             find_word = re.sub(pattern, "", input("Введите слово, по которому я подберу вакансии: ")).lower()
             item_hh = HH(api_src, find_word)
             vacancies_hh = item_hh.load_vacancies
+            # vacancies_hh = [{"": ""}]
 
             if vacancies_hh != []:
                 print(f"\nУспешно получили список вакансий, сохраню их:\n{save_to_file}\n")
                 vacancies = VacanciSaver("data/vacancies_hh.json")
-                
-                to_sort = re.sub(pattern, "", (
-                    input(
-                        """Если желаете отсортировать по убываню или по возврастанию, то
+                # vacancies.save_vacancy(vacancies_hh)
+
+                to_sort = re.sub(
+                    pattern,
+                    "",
+                    (
+                        input(
+                            """Если желаете отсортировать по убываню или по возврастанию, то
                 введите соответствующее слово или нажмите продолжть:\n"""
-                    ))
+                        )
+                    ),
                 ).lower()
-                
-                to_filtring = re.sub(pattern, "", (
-                    input(
-                        """Если желаете отфильтровать по убываню или по возврастанию, то
-                введите соответствующее слово или нажмите продолжть:\n"""
-                    ))
-                ).lower()
-                
+                logger_main.info(f"{to_sort}")
+
+                to_filtring = re.sub(
+                    pattern,
+                    "",
+                    (
+                        input(
+                            """             Если желаете отфильтровать по типу занятости, то
+                введите параметр в точности:
+                - Частичная занятость
+                - Проектная работа
+                - Полная занятость
+                - Вахта
+                - Гибрид
+                - Удалённо
+                - Разъездной
+                - На месте работодателя
+                или нажмите продолжть:\n"""
+                        )
+                    ),
+                )
+                logger_main.info(f"{to_filtring}")
+
+                to_filtring_vacanci = FilteringVacancies(vacancies.load_vacancy())
                 sorted_vacanci = []
 
-                if to_sort == "убываню":
-                    to_sorted_vacanci = VacanciOperator(vacancies.load_vacancy())
-                    sorted_vacanci = to_sorted_vacanci.sorting_vacancies_for_salary(True)
-                elif to_sort == "убываню":
-                    to_sorted_vacanci = VacanciOperator(vacancies.load_vacancy())
-                    sorted_vacanci = to_sorted_vacanci.sorting_vacancies_for_salary(True)
+                if to_filtring in ["Полная занятость", "Частичная занятость", "Проектная работа", "Вахта"]:
+                    to_filtring_vacanci = FilteringVacancies(vacancies.load_vacancy())
+                    sorted_vacanci = to_filtring_vacanci.sorting_vacancies_for_salary(
+                        triger=False, parameter="employment", filters=to_filtring
+                    )
+                    logger_main.info(f"{to_filtring}")
                 else:
-                    to_sorted_vacanci = FilteringVacancies(vacancies.load_vacancy())
+                    to_filtring_vacanci = FilteringVacancies(vacancies.load_vacancy())
+                    sorted_vacanci = to_filtring_vacanci.sorting_vacancies_for_salary(
+                        triger=False, parameter="work_format", filters=to_filtring
+                    )
+                    logger_main.info(f"{to_filtring}")
+
+                to_sorted_vacanci = VacanciOperator(sorted_vacanci)
+
+                if to_sort == "убываню":
+                    sorted_vacanci = to_sorted_vacanci.sorting_vacancies_for_salary(True)
+                    print(to_sorted_vacanci)
+                    logger_main.info("убываню")
+
+                elif to_sort == "возврастанию":
                     sorted_vacanci = to_sorted_vacanci.sorting_vacancies_for_salary(False)
+                    print(to_sorted_vacanci)
+                    logger_main.info("возврастанию")
+
+                else:
+                    print(to_filtring_vacanci)
+
+            result = VacanciSaver(save_to_file_sort)
+            result.save_vacancy(sorted_vacanci)
+            print("\nВозвращаюсь в главное меню\n")
 
         elif user_choice == "2":
             print("До следующей встречи)")
             triger = False
         else:
             print("Хм, кажется такого варианта у меня пока нет(")
-
-    # item_hh = HH("https://api.hh.ru/vacancies", "Python")
-    # vacancies_hh = item_hh.load_vacancies
-    # item_hh = VacanciSaver("data/vacancies_hh.json")
-    # vacancies_hh = item_hh.load_vacancy()
-
-    # selected_vacanci = FilteringVacancies(vacancies_hh)
-    # print(selected_vacanci)
-    # selected_sort_vacanci = selected_vacanci.sorting_vacancies_for_salary("зарплата")
-    # print(selected_vacanci)
-
-    # save_object = VacanciSaver("data/selected_vacancies_hh.json")
-    # save_object.save_vacancy(selected_sort_vacanci)
-
-    # vacancies = save_object.load_vacancy()
-    # print(vacancies[0]["name"])
 
     logger_main.info("End main")
 

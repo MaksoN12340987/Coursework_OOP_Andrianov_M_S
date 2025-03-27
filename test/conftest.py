@@ -1,5 +1,6 @@
 import pytest
 
+from src.filtering_vacancies import FilteringVacancies
 from src.vacancies import VacanciOperator
 from src.saver import VacanciSaver
 from src.get_api_hh import HH
@@ -411,3 +412,10 @@ def sorted_vacancies():
 @pytest.fixture
 def return_vacancy_job_requirements() -> str:
     return "2+ года коммерческого опыта с Golang. Английский В1. Хорошее понимание микросервисной архитектуры. Владение стеком: Go, gRPC, GraphQL, HTTP...\n"
+
+
+@pytest.fixture
+def object_filtering_vacancies_defolt():
+    object_vacanci = VacanciSaver("test/data_test_filters.json")
+    object_filtering_vacancies = FilteringVacancies(object_vacanci.load_vacancy())
+    return object_filtering_vacancies

@@ -64,13 +64,13 @@ class VacanciOperator(Vacanci):
     def __call__(self):
         return self.__pull_vacanci
 
-    def vacancy_job_title(self, number_vacanci: int) -> str:
+    def vacancy_job_title(self, number_vacanci: int = 0) -> str:
         """Метод возвращает название вакансии по её порядковому номеру
         Args:
-            number_vacanci (int): _description_
+            number_vacanci (int): номер вакансии в списке
 
         Returns:
-            str: _description_
+            str: Строка
         """
         super().vacancy_job_title()
         if number_vacanci < self.number_of_vacancies + 1:
@@ -78,14 +78,14 @@ class VacanciOperator(Vacanci):
         else:
             return "Упс, вакансий не нашлось(\n"
 
-    def vacancy_link_to_vacancy(self, number_vacanci: int) -> str:
+    def vacancy_link_to_vacancy(self, number_vacanci: int = 0) -> str:
         """Метод возвращает ссылку на вакансию по её порядковому номер
 
         Args:
-            number_vacanci (int): порядковый номер вакансии
+            number_vacanci (int): номер вакансии в списке
 
         Returns:
-            str: ссылка на вакансию
+            str: Строка
         """
         super().vacancy_link_to_vacancy()
         if number_vacanci < self.number_of_vacancies + 1:
@@ -93,7 +93,7 @@ class VacanciOperator(Vacanci):
         else:
             return "Упс, вакансий не нашлось(\n"
 
-    def vacancy_salary(self, number_vacanci: int) -> str:
+    def vacancy_salary(self, number_vacanci: int = 0) -> str:
         """Метод возвращает зарплату по порядковому номеру вакансии
 
         Args:
@@ -113,14 +113,14 @@ class VacanciOperator(Vacanci):
         else:
             return "Упс, вакансий не нашлось(\n"
 
-    def vacancy_job_requirements(self, number_vacanci: int) -> str:
+    def vacancy_job_requirements(self, number_vacanci: int = 0) -> str:
         """Метод возвращает требования к соискателю по порядковому номеру вакансии
 
         Args:
             number_vacanci (int): порядковый номер вакансии
 
         Returns:
-            str: _description_
+            str: Строка
         """
         super().vacancy_job_requirements()
         if number_vacanci < self.number_of_vacancies + 1:
@@ -142,6 +142,7 @@ class VacanciOperator(Vacanci):
         for i, value in enumerate(self.__pull_vacanci):
             if not value["salary"]:
                 value["salary"] = {"from": 0}
+
         self.__pull_vacanci.sort(key=lambda operation_list: operation_list["salary"]["from"], reverse=selector)
         super().sorting_vacancies_for_salary()
         return self.__pull_vacanci

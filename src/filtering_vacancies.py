@@ -5,7 +5,7 @@ from src.vacancies import VacanciOperator
 
 
 logger_filtering = logging.getLogger(__name__)
-file_handler = logging.FileHandler(f"log/{__name__}.log", mode="w")
+file_handler = logging.FileHandler(f"log/{__name__}.log", mode="w", encoding="utf8")
 file_formatter = logging.Formatter(
     "\n%(asctime)s %(levelname)s %(name)s %(funcName)s %(lineno)d: \n%(message)s", datefmt="%H:%M:%S %d-%m-%Y"
 )
@@ -34,9 +34,11 @@ class FilteringVacancies(VacanciOperator):
 
         return result
 
-    def sorting_vacancies_for_salary(self, triger: bool = True, parameter: str = "", filters: str = "", selector: bool = True) -> list:
+    def sorting_vacancies_for_salary(
+        self, triger: bool = True, parameter: str = "", filters: str = "", selector: bool = True
+    ) -> list:
         """Метод фильтрует вакансии по:
-        1 "зарплата" указана\нет
+        1 "зарплата" указана или нет
         2 "тип занятости" полная или другая
 
         Args:
@@ -49,23 +51,22 @@ class FilteringVacancies(VacanciOperator):
         """
         if triger:
             super().sorting_vacancies_for_salary(selector)
-        parameter = parameter.lower()
-        filters = filters.lower().title()
         result = []
 
-        if parameter == "зарплата" or parameter == "1":
-            logger_filtering.warning(f"Фильтрую по зарплате")
+        if parameter == "employment":
+            pattern = re.compile(f"{filters}")
+            logger_filtering.warning(f"Фильтрую по employment\n'{pattern}'")
 
             for i, value in enumerate(self.__pull_vacanci):
-                if value["salary"]["from"] > 0:
+                if re.search(pattern, f"{value["employment"]["name"]}"):
                     result.append(value)
 
-        elif parameter == "тип занятости" or parameter == "2":
-            logger_filtering.warning(f"Фильтрую по тип занятости")
-            pattern = re.compile(f"<{filters}+>")
+        elif parameter == "work_format":
+            pattern = re.compile(f"{filters}")
+            logger_filtering.warning(f"Фильтрую по work_format\n'{pattern}'")
 
             for i, value in enumerate(self.__pull_vacanci):
-                if re.search(pattern, f"{value["schedule"]["name"]}"):
+                if re.search(pattern, f"{str(value["work_format"])}"):
                     result.append(value)
 
         else:
