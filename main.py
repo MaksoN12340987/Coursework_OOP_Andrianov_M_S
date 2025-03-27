@@ -2,9 +2,9 @@ import logging
 import re
 
 from src.filtering_vacancies import FilteringVacancies
-from src.vacancies import VacanciOperator
 from src.get_api_hh import HH
 from src.saver import VacanciSaver
+from src.vacancies import VacanciOperator
 
 logger_main = logging.getLogger(__name__)
 file_handler = logging.FileHandler(f"log/{__name__}.log", mode="w", encoding="UTF8")

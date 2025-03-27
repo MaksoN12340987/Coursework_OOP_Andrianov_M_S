@@ -3,7 +3,6 @@ import re
 
 from src.vacancies import VacanciOperator
 
-
 logger_filtering = logging.getLogger(__name__)
 file_handler = logging.FileHandler(f"log/{__name__}.log", mode="w", encoding="utf8")
 file_formatter = logging.Formatter(

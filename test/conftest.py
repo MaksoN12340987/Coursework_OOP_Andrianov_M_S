@@ -1,9 +1,9 @@
 import pytest
 
 from src.filtering_vacancies import FilteringVacancies
-from src.vacancies import VacanciOperator
-from src.saver import VacanciSaver
 from src.get_api_hh import HH
+from src.saver import VacanciSaver
+from src.vacancies import VacanciOperator
 
 
 @pytest.fixture

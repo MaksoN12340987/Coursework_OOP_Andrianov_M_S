@@ -1,8 +1,7 @@
-from src.abstract_clases import Vacanci
+import logging
 import re
 
-import logging
-
+from src.abstract_clases import Vacanci
 
 logger_vacancies = logging.getLogger(__name__)
 file_handler = logging.FileHandler(f"log/{__name__}.log", mode="w")

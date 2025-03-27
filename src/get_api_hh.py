@@ -1,4 +1,5 @@
 import logging
+
 import requests
 
 from src.abstract_clases import Parser
@@ -19,6 +20,8 @@ class HH(Parser):
 
     Args:
         url (str): адрес апи
+        keyword (str): ключевое слово для подбора вакансий
+
     Returns:
         list: список вакансий
     """
@@ -34,12 +37,15 @@ class HH(Parser):
         super().__init__()
 
     def __str__(self):
+        """Метод срабатывает при print(object_hh)
+        Выводит строку с ссылкой на апи, заголовком и параметрами
+        """
         super().__str__()
         return f"{self.__url}, {self.__headers}, {self.__params}"
 
     @property
     def load_vacancies(self):
-        """Ьетод получает список вакансий из апи hh.ru
+        """Метод получает список вакансий из апи hh.ru
 
         Args:
             keyword (str): ключевое слово для подбора

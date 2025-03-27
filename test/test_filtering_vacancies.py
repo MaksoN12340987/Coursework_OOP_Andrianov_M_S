@@ -1,4 +1,3 @@
-
 def test__filtering_vacancies_full(object_filtering_vacancies_defolt):
     object_of_comparison = object_filtering_vacancies_defolt.sorting_vacancies_for_salary(
         False, "employment", "Полная занятость"
