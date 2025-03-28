@@ -26,6 +26,7 @@ class VacanciOperator(Vacanci):
 
     pull_vacanci: list
 
+    __slots__ = ('pull_vacanci')
     def __init__(self, pull_vacanci):
         if pull_vacanci != []:
             self.job_title = pull_vacanci[0]["name"]

@@ -16,6 +16,7 @@ logger_filtering.setLevel(logging.INFO)
 class FilteringVacancies(VacanciOperator):
     pull_vacanci: list
 
+    __slots__ = ('pull_vacanci')
     def __init__(self, pull_vacanci):
         super().__init__(pull_vacanci)
         self.__pull_vacanci = pull_vacanci

@@ -64,7 +64,7 @@ class HH(Parser):
             try:
                 response = requests.get(self.__url, headers=self.__headers, params=self.__params)
                 if response.status_code == 200:
-                    vacancies = response.json()["items"]
+                    vacancies.append(response.json()["items"])
 
             except requests.exceptions.ConnectionError:
                 vacancies = []
