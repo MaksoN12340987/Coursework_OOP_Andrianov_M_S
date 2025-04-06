@@ -24,76 +24,59 @@ class VacanciOperator(Vacanci):
         Vacanci (_type_): список вакансий
     """
 
-    pull_vacanci: list
+    vacanci: dict
 
-    __slots__ = ('pull_vacanci')
-    def __init__(self, pull_vacanci):
-        if pull_vacanci != []:
-            self.job_title = pull_vacanci[0]["name"]
-            self.vacancy_link = pull_vacanci[0]["alternate_url"]
+    __slots__ = "vacanci"
+
+    def __init__(self, vacanci):
+        checked_values = self.__inpu_data_validation(vacanci)
+        self.__job_id = checked_values["id"]
+        self.__job_link = checked_values["link"]
+        self.__job_title = checked_values["title"]
+        self.__job_salary = checked_values["salary"]
+        self.__job_requirements = checked_values["requirements"]
+
+    def __inpu_data_validation(self, vacanci_dict: dict):
+        if vacanci_dict != {}:
+            job_id = vacanci_dict["id"]
+            job_title = vacanci_dict["name"]
+            vacancy_link = vacanci_dict["alternate_url"]
             try:
-                self.salary = f"{pull_vacanci[0]["salary"]["from"]}"
+                salary = f"{vacanci_dict["salary"]["from"]}"
             except TypeError:
-                self.salary = "Не указана"
+                salary = 0
 
             pattern = re.compile(r"<\D.\w+>")
-            self.job_requirements = re.sub(pattern, "", f"{pull_vacanci[0]["snippet"]["requirement"]}\n")
+            job_requirements = re.sub(pattern, "", f"{vacanci_dict["snippet"]["requirement"]}\n")
         else:
-            self.job_title = ""
-            self.vacancy_link = ""
-            self.salary = 0
-            self.job_requirements = "\n"
-        self.number_of_vacancies = len(pull_vacanci)
-        self.__pull_vacanci = pull_vacanci
-        super().__init__()
+            job_id = 0
+            job_title = ""
+            vacancy_link = ""
+            salary = 0
+            job_requirements = ""
+
+        return {
+            "id": job_id,
+            "link": vacancy_link,
+            "title": job_title,
+            "salary": salary,
+            "requirements": job_requirements,
+        }
 
     def __str__(self) -> str:
-        super().__str__()
-        result = "\nСписок вакансий:\n"
-        for i, value in enumerate(self.__pull_vacanci):
-            try:
-                result += f"{i + 1}. {value["name"]} {value["salary"]["from"]}\n"
-            except TypeError:
-                result += f"{i + 1}. {value["name"]} {value["salary"]}\n"
-
-        if len(self.__pull_vacanci) < 1:
-            result += "Упс, вакансий не нашлось(\n"
-
-        return result
+        return self.__job_salary
 
     def __call__(self):
-        return self.__pull_vacanci
+        return {
+            "id": self.__job_id,
+            "link": self.__job_link,
+            "name": self.__job_title,
+            "salary": self.__job_salary,
+            "requirements": self.__job_requirements,
+        }
 
-    def vacancy_job_title(self, number_vacanci: int = 0) -> str:
-        """Метод возвращает название вакансии по её порядковому номеру
-        Args:
-            number_vacanci (int): номер вакансии в списке
-
-        Returns:
-            str: Строка
-        """
-        super().vacancy_job_title()
-        if number_vacanci < self.number_of_vacancies + 1:
-            return f"{self.__pull_vacanci[number_vacanci - 1]["name"]}"
-        else:
-            return "Упс, вакансий не нашлось(\n"
-
-    def vacancy_link_to_vacancy(self, number_vacanci: int = 0) -> str:
-        """Метод возвращает ссылку на вакансию по её порядковому номер
-
-        Args:
-            number_vacanci (int): номер вакансии в списке
-
-        Returns:
-            str: Строка
-        """
-        super().vacancy_link_to_vacancy()
-        if number_vacanci < self.number_of_vacancies + 1:
-            return f"{self.__pull_vacanci[number_vacanci - 1]["alternate_url"]}"
-        else:
-            return "Упс, вакансий не нашлось(\n"
-
-    def vacancy_salary(self, number_vacanci: int = 0) -> str:
+    @property
+    def vacancy_id(self) -> str:
         """Метод возвращает зарплату по порядковому номеру вакансии
 
         Args:
@@ -102,18 +85,45 @@ class VacanciOperator(Vacanci):
         Returns:
             str: зарплата и валюта
         """
-        super().vacancy_salary()
-        if number_vacanci < self.number_of_vacancies + 1:
-            try:
-                result = f"{self.__pull_vacanci[number_vacanci - 1]["salary"]["from"]} "
-                result += f"{self.__pull_vacanci[number_vacanci - 1]["salary"]["currency"]}"
-                return result
-            except TypeError:
-                return "Не указана"
-        else:
-            return "Упс, вакансий не нашлось(\n"
+        return f"id вакансии:\n{self.__job_id}"
 
-    def vacancy_job_requirements(self, number_vacanci: int = 0) -> str:
+    @property
+    def vacancy_salary(self) -> str:
+        """Метод возвращает зарплату по порядковому номеру вакансии
+
+        Args:
+            number_vacanci (int): порядковый номер вакансии
+
+        Returns:
+            str: зарплата и валюта
+        """
+        return f"Зарплата:\n{self.__job_salary}"
+
+    @property
+    def vacancy_job_title(self) -> str:
+        """Метод возвращает название вакансии по её порядковому номеру
+        Args:
+            number_vacanci (int): номер вакансии в списке
+
+        Returns:
+            str: Строка
+        """
+        return f"Должность:\n{self.__job_title}"
+
+    @property
+    def vacancy_link_to_vacancy(self) -> str:
+        """Метод возвращает ссылку на вакансию по её порядковому номер
+
+        Args:
+            number_vacanci (int): номер вакансии в списке
+
+        Returns:
+            str: Строка
+        """
+        return f"Ссылка на вакансию:\n{self.__job_link}"
+
+    @property
+    def vacancy_job_requirements(self) -> str:
         """Метод возвращает требования к соискателю по порядковому номеру вакансии
 
         Args:
@@ -122,14 +132,21 @@ class VacanciOperator(Vacanci):
         Returns:
             str: Строка
         """
-        super().vacancy_job_requirements()
-        if number_vacanci < self.number_of_vacancies + 1:
-            pattern = re.compile(r"<\D.\w+>")
-            return re.sub(pattern, "", f"{self.__pull_vacanci[number_vacanci - 1]["snippet"]["requirement"]}\n")
-        else:
-            return "Упс, вакансий не нашлось(\n"
+        return f"Требоапния к соискателю:\n{self.__job_requirements}"
 
-    def sorting_vacancies_for_salary(self, selector: bool = True) -> list:
+    def __eq__(self, comparison_instance):
+        return comparison_instance == self.__job_salary
+
+    def __lt__(self, comparison_instance):
+        return comparison_instance < self.__job_salary
+
+    def __gt__(self, comparison_instance):
+        return comparison_instance > self.__job_salary
+
+    @staticmethod
+    def sorting_vacancies_for_salary(
+        pull_vacanci: list, selector: bool = True, parameter: str = "", filters: str = ""
+    ) -> list:
         """Метод сортирует вакансии по зарплате и возвращает список
 
         Args:
@@ -139,10 +156,33 @@ class VacanciOperator(Vacanci):
         Returns:
             list: отсортированный список вакансий
         """
-        for i, value in enumerate(self.__pull_vacanci):
+        result = []
+        for i, value in enumerate(pull_vacanci):
             if not value["salary"]:
                 value["salary"] = {"from": 0}
+            elif not value["salary"]["from"]:
+                value["salary"] = {"from": 0}
 
-        self.__pull_vacanci.sort(key=lambda operation_list: operation_list["salary"]["from"], reverse=selector)
-        super().sorting_vacancies_for_salary()
-        return self.__pull_vacanci
+        pull_vacanci.sort(key=lambda operation_list: operation_list["salary"]["from"], reverse=selector)
+
+        if parameter == "employment":
+            pattern = re.compile(f"{filters}")
+            logger_vacancies.info(f"Фильтрую по employment\n'{pattern}'")
+
+            for i, value in enumerate(pull_vacanci):
+                if re.search(pattern, f"{value["employment"]["name"]}"):
+                    result.append(value)
+
+        elif parameter == "work_format":
+            pattern = re.compile(f"{filters}")
+            logger_vacancies.info(f"Фильтрую по work_format\n'{pattern}'")
+
+            for i, value in enumerate(pull_vacanci):
+                if re.search(pattern, f"{str(value["work_format"])}"):
+                    result.append(value)
+
+        else:
+            print(f"Параметр {parameter} не найден")
+            logger_vacancies.warning(f"Параметр {parameter} не найден, возвращаю []")
+            result = pull_vacanci
+        return result

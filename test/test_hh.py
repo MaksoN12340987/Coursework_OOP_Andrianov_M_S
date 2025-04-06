@@ -1,7 +1,7 @@
 # import json
 # from unittest.mock import patch
 
-import pytest
+import pytest  # type: ignore
 
 from src.get_api_hh import HH
 

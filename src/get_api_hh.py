@@ -34,13 +34,11 @@ class HH(Parser):
         self.__vacancies = []
         self.__headers = {"User-Agent": "HH-User-Agent"}
         self.__params = {"text": keyword, "page": 1, "per_page": 1}
-        super().__init__()
 
     def __str__(self):
         """Метод срабатывает при print(object_hh)
         Выводит строку с ссылкой на апи, заголовком и параметрами
         """
-        super().__str__()
         return f"{self.__url}, {self.__headers}, {self.__params}"
 
     @property
@@ -58,13 +56,15 @@ class HH(Parser):
         Returns:
             list: список вакансий, найденых по ключевому слову
         """
-        super().load_vacancies()
         while self.__params.get("page") != 20:
             vacancies = []
             try:
                 response = requests.get(self.__url, headers=self.__headers, params=self.__params)
                 if response.status_code == 200:
-                    vacancies.append(response.json()["items"])
+                    try:
+                        vacancies.append(response.json()["items"][0])
+                    except IndexError:
+                        logger_hh.warning(f"sent an empty list(:\n{response.json()["items"]}")
 
             except requests.exceptions.ConnectionError:
                 vacancies = []
@@ -75,7 +75,7 @@ class HH(Parser):
                 raise ValueError("HTTP Error. Please check the URL.")
 
             finally:
-                logger_hh.info(f"Attempt to access API completed, returned:\n{vacancies[:50]}")
+                logger_hh.debug(f"Attempt to access API completed, returned:\n{vacancies[:50]}")
 
             self.__vacancies.extend(vacancies)
             self.__params["page"] += 1
