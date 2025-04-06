@@ -15,10 +15,13 @@ logger_vacancies.setLevel(logging.INFO)
 
 class VacanciOperator(Vacanci):
     """Класс работы с вакансиями
-    vacancy_job_title - метод возвращает название вакансии по её порядковому номеру
-    vacancy_link_to_vacancy - метод возвращает ссылку на вакансию по её порядковому номеру
-    vacancy_salary - метод возвращает зарплату по порядковому номеру вакансии
-    vacancy_job_requirements - метод возвращает требования к соискателю по порядковому номеру вакансии
+    Умеет:
+    - возвращать зарплату объекта вакансии
+    - словарь атрибутов
+    - результаты сравнения вакансий по зарплате
+    - имеет @staticmethod для сортировки вакансий
+    - имеет разные методы для доступа к атрибутам экземпляра класса
+    
 
     Args:
         Vacanci (_type_): список вакансий
@@ -37,6 +40,14 @@ class VacanciOperator(Vacanci):
         self.__job_requirements = checked_values["requirements"]
 
     def __inpu_data_validation(self, vacanci_dict: dict):
+        """Приватный метод валидации входящих данных
+
+        Args:
+            vacanci_dict (dict): словарь вакансии
+
+        Returns:
+            _type_: словарь валидированных данных
+        """
         if vacanci_dict != {}:
             job_id = vacanci_dict["id"]
             job_title = vacanci_dict["name"]
@@ -64,9 +75,19 @@ class VacanciOperator(Vacanci):
         }
 
     def __str__(self) -> str:
+        """При выводе 'print' возвращяет атрибут 'зарплата'
+
+        Returns:
+            str: _description_
+        """
         return self.__job_salary
 
     def __call__(self):
+        """При вызове экземпляра класса возвращяет словарь атрибутов класса
+
+        Returns:
+            _type_: словарь атрибутов класса
+        """
         return {
             "id": self.__job_id,
             "link": self.__job_link,
@@ -135,23 +156,56 @@ class VacanciOperator(Vacanci):
         return f"Требоапния к соискателю:\n{self.__job_requirements}"
 
     def __eq__(self, comparison_instance):
+        """Метод сравнения двух вакансий по зарплате
+        Возвращает результат сравнения типа bool
+
+        Args:
+            comparison_instance (_type_): _description_
+
+        Returns:
+            bool: True - если равны
+        """
         return comparison_instance == self.__job_salary
 
     def __lt__(self, comparison_instance):
+        """Метод сравнения двух вакансий по зарплате
+        Возвращает результат сравнения типа bool
+
+        Args:
+            comparison_instance (_type_): _description_
+
+        Returns:
+            bool: True - если переданная меньше текущей
+        """
         return comparison_instance < self.__job_salary
 
     def __gt__(self, comparison_instance):
+        """Метод сравнения двух вакансий по зарплате
+        Возвращает результат сравнения типа bool
+
+        Args:
+            comparison_instance (_type_): _description_
+
+        Returns:
+            bool: True - если переданная больше текущей
+        """
         return comparison_instance > self.__job_salary
 
     @staticmethod
     def sorting_vacancies_for_salary(
         pull_vacanci: list, selector: bool = True, parameter: str = "", filters: str = ""
     ) -> list:
-        """Метод сортирует вакансии по зарплате и возвращает список
+        """Метод сортирует вакансии по:
+        - зарплате
+        - по типу занятости
+        - месту работы
 
         Args:
             selector (bool, optional): селектор направления сортировки:
             True - по умолчанию, от большей к меньшей
+            parameter (str, optional): можно указывать:
+            - "employment" - фильтр по типу занятости
+            - "work_format" - фильтр месту работы
 
         Returns:
             list: отсортированный список вакансий
