@@ -1,0 +1,221 @@
+[
+    {
+        "id": "119126777",
+        "premium": false,
+        "name": "Manual Frontend QA",
+        "department": null,
+        "has_test": false,
+        "response_letter_required": false,
+        "area": {
+            "id": "1",
+            "name": "Москва",
+            "url": "https://api.hh.ru/areas/1"
+        },
+        "salary": null,
+        "salary_range": null,
+        "type": {
+            "id": "open",
+            "name": "Открытая"
+        },
+        "address": null,
+        "response_url": null,
+        "sort_point_distance": null,
+        "published_at": "2025-04-03T15:19:36+0300",
+        "created_at": "2025-04-03T15:19:36+0300",
+        "archived": false,
+        "apply_alternate_url": "https://hh.ru/applicant/vacancy_response?vacancyId=119126777",
+        "show_logo_in_search": null,
+        "insider_interview": null,
+        "url": "https://api.hh.ru/vacancies/119126777?host=hh.ru",
+        "alternate_url": "https://hh.ru/vacancy/119126777",
+        "relations": [],
+        "employer": {
+            "id": "5550364",
+            "name": "Marfatech",
+            "url": "https://api.hh.ru/employers/5550364",
+            "alternate_url": "https://hh.ru/employer/5550364",
+            "logo_urls": {
+                "original": "https://img.hhcdn.ru/employer-logo-original/947617.png",
+                "90": "https://img.hhcdn.ru/employer-logo/4231004.png",
+                "240": "https://img.hhcdn.ru/employer-logo/4231005.png"
+            },
+            "vacancies_url": "https://api.hh.ru/vacancies?employer_id=5550364",
+            "accredited_it_employer": false,
+            "trusted": true
+        },
+        "snippet": {
+            "requirement": "Понимание SDLC и потребностей разработки. Умение тестировать требования к ПО. Опыт исследовательского тестирования. Умение формировать чек-лист, предугадывать поведение системы. ",
+            "responsibility": "Тестирование UI/UX. Тестирование компонентов UI Kit. Создание и актуализация тестовой документации: дизайн тест-кейсов, составление чек-листов, оформление баг..."
+        },
+        "show_contacts": false,
+        "contacts": null,
+        "schedule": {
+            "id": "remote",
+            "name": "Удаленная работа"
+        },
+        "working_days": [],
+        "working_time_intervals": [],
+        "working_time_modes": [],
+        "accept_temporary": false,
+        "fly_in_fly_out_duration": [],
+        "work_format": [
+            {
+                "id": "REMOTE",
+                "name": "Гибрид"
+            }
+        ],
+        "working_hours": [
+            {
+                "id": "HOURS_9",
+                "name": "9 часов"
+            }
+        ],
+        "work_schedule_by_days": [
+            {
+                "id": "FIVE_ON_TWO_OFF",
+                "name": "5/2"
+            }
+        ],
+        "night_shifts": false,
+        "professional_roles": [
+            {
+                "id": "96",
+                "name": "Программист, разработчик"
+            }
+        ],
+        "accept_incomplete_resumes": false,
+        "experience": {
+            "id": "between1And3",
+            "name": "От 1 года до 3 лет"
+        },
+        "employment": {
+            "id": "full",
+            "name": "Вахта"
+        },
+        "employment_form": {
+            "id": "FULL",
+            "name": "Полная"
+        },
+        "internship": false,
+        "adv_response_url": null,
+        "is_adv_vacancy": false,
+        "adv_context": null
+    },
+    {
+        "id": "119078576",
+        "premium": false,
+        "name": "QA инженер",
+        "department": null,
+        "has_test": false,
+        "response_letter_required": false,
+        "area": {
+            "id": "1",
+            "name": "Москва",
+            "url": "https://api.hh.ru/areas/1"
+        },
+        "salary": {
+            "from": 125000,
+            "to": 160000,
+            "currency": "RUR",
+            "gross": false
+        },
+        "salary_range": {
+            "from": 125000,
+            "to": 160000,
+            "currency": "RUR",
+            "gross": false,
+            "mode": {
+                "id": "MONTH",
+                "name": "За месяц"
+            },
+            "frequency": null
+        },
+        "type": {
+            "id": "open",
+            "name": "Открытая"
+        },
+        "address": null,
+        "response_url": null,
+        "sort_point_distance": null,
+        "published_at": "2025-04-05T15:00:38+0300",
+        "created_at": "2025-04-05T15:00:38+0300",
+        "archived": false,
+        "apply_alternate_url": "https://hh.ru/applicant/vacancy_response?vacancyId=119078576",
+        "show_logo_in_search": null,
+        "insider_interview": null,
+        "url": "https://api.hh.ru/vacancies/119078576?host=hh.ru",
+        "alternate_url": "https://hh.ru/vacancy/119078576",
+        "relations": [],
+        "employer": {
+            "id": "6150428",
+            "name": "Ит-Финанс",
+            "url": "https://api.hh.ru/employers/6150428",
+            "alternate_url": "https://hh.ru/employer/6150428",
+            "logo_urls": {
+                "original": "https://img.hhcdn.ru/employer-logo-original/1018308.png",
+                "90": "https://img.hhcdn.ru/employer-logo/5694000.png",
+                "240": "https://img.hhcdn.ru/employer-logo/5694001.png"
+            },
+            "vacancies_url": "https://api.hh.ru/vacancies?employer_id=6150428",
+            "accredited_it_employer": true,
+            "trusted": true
+        },
+        "snippet": {
+            "requirement": "Практические навыки использования инструментов тестирования (Swagger, Postman, Fiddler/Charles, DevTools). Знакомство с Grafana. Знакомство с Kibana. Минимальные знания <highlighttext>Python</highlighttext>. ",
+            "responsibility": "Ручное тестирование на проекте веб-приложения (LeadsTech - трекер CPA сети). Упор на бэкенд. Соотношение бэк/фронт 70/30. "
+        },
+        "show_contacts": false,
+        "contacts": null,
+        "schedule": {
+            "id": "remote",
+            "name": "Удаленная работа"
+        },
+        "working_days": [],
+        "working_time_intervals": [],
+        "working_time_modes": [],
+        "accept_temporary": false,
+        "fly_in_fly_out_duration": [],
+        "work_format": [
+            {
+                "id": "REMOTE",
+                "name": "Удалённо"
+            }
+        ],
+        "working_hours": [
+            {
+                "id": "HOURS_8",
+                "name": "8 часов"
+            }
+        ],
+        "work_schedule_by_days": [
+            {
+                "id": "FIVE_ON_TWO_OFF",
+                "name": "5/2"
+            }
+        ],
+        "night_shifts": false,
+        "professional_roles": [
+            {
+                "id": "124",
+                "name": "Тестировщик"
+            }
+        ],
+        "accept_incomplete_resumes": false,
+        "experience": {
+            "id": "between3And6",
+            "name": "От 3 до 6 лет"
+        },
+        "employment": {
+            "id": "full",
+            "name": "Полная занятость"
+        },
+        "employment_form": {
+            "id": "FULL",
+            "name": "Полная"
+        },
+        "internship": false,
+        "adv_response_url": null,
+        "is_adv_vacancy": false,
+        "adv_context": null
+    }
+]
